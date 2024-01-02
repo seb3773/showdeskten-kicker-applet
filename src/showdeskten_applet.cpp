@@ -4,7 +4,8 @@
 #include <tqpixmap.h> 
 #include "showdeskten_applet.h"
 #include <tqpushbutton.h>
-#include <krun.h>
+#include <dcopclient.h>
+
 
 showdeskten_applet::showdeskten_applet(const TQString& configFile, Type type, int actions, TQWidget *parent, const char *name)
     : KPanelApplet(configFile, type, actions, parent, name)
@@ -17,6 +18,9 @@ showdeskten_applet::showdeskten_applet(const TQString& configFile, Type type, in
     iconButton->setIconSet(icon);
     iconButton->setFixedSize(icon.size() + TQSize(2, 2));
     setFixedSize(icon.size().width(), icon.size().height());
+
+    if ( !kapp->dcopClient()->isAttached() )
+        kapp->dcopClient()->attach();
 
     connect(iconButton, SIGNAL(clicked()), this, SLOT(iconClicked()));
     mainView = iconButton;
@@ -32,7 +36,13 @@ showdeskten_applet::~showdeskten_applet()
 
 void showdeskten_applet::iconClicked()
 {
-    KRun::runCommand("dcop kdesktop KDesktopIface toggleShowDesktop");
+    TQCString appname( "kdesktop" );
+    int kicker_screen_number = tqt_xscreen();
+    if ( kicker_screen_number )
+        appname.sprintf("kdesktop-screen-%d", kicker_screen_number);
+    kapp->dcopClient()->send(appname, "KDesktopIface", "toggleShowDesktop()", TQString(""));
+
+   // KRun::runCommand("dcop kdesktop KDesktopIface toggleShowDesktop");
 }
 
 
