@@ -1,11 +1,11 @@
 #!/bin/sh
-make
+sudo make
 if [ $? -eq 0 ]; then
 read -p "Press \"Enter\" ..." xyz
 killall -w kicker
-sudo \cp actioncenter_applet.desktop /opt/trinity/share/apps/kicker/applets/actioncenter_applet.desktop
-sudo \cp .libs/actioncenter_applet_panelapplet.lai /opt/trinity/lib/trinity/actioncenter_applet_panelapplet.la
-sudo \cp .libs/actioncenter_applet_panelapplet.so /opt/trinity/lib/trinity/actioncenter_applet_panelapplet.so
+sudo \cp showdeskten_applet.desktop /opt/trinity/share/apps/kicker/applets/showdeskten_applet.desktop
+sudo \cp .libs/showdeskten_applet_panelapplet.lai /opt/trinity/lib/trinity/showdeskten_applet_panelapplet.la
+sudo \cp .libs/showdeskten_applet_panelapplet.so /opt/trinity/lib/trinity/showdeskten_applet_panelapplet.so
 kicker &
 echo "done."
 else
