@@ -7,8 +7,7 @@
 
 #include <kpanelapplet.h>
 #include <tqstring.h>
-
-#include <tqpushbutton.h> 
+#include <tqlabel.h>
 
 class showdeskten_applet : public KPanelApplet
 {
@@ -23,6 +22,7 @@ public:
 
 protected:
     void resizeEvent(TQResizeEvent *);
+    bool eventFilter(TQObject *obj, TQEvent *event);
 
 private slots:
     void iconClicked();
@@ -30,6 +30,7 @@ private slots:
 private:
     TDEConfig *ksConfig;
     TQWidget *mainView;
+    TQLabel *m_iconLabel;
 };
 
 #endif
